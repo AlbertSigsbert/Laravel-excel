@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PriceRequestController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/* Orders Routes */
 Route::get('/orders', [OrderController::class, 'index'])->name('orders');
 Route::get('order/create', [OrderController::class, 'create'])->name('order.create');
 // Route::get('/orders/{order}', [OrderController::class, 'show'] )->name('order.show]');
@@ -26,6 +29,17 @@ Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.delete');
 Route::get('users/export/', 'OrderController@export')->name('orders.export');
+
+
+/* price Requests routes */
+Route::get('/price-requests', [PriceRequestController::class, 'index'])->name('price-requests.index');
+Route::get('/price-requests/create', [PriceRequestController::class, 'create'])->name('price-requests.create');
+Route::post('/price-requests', [PriceRequestController::class, 'store'])->name('price-requests.store');
+Route::get('/price-requests/{priceRequest}', [PriceRequestController::class, 'edit'])->name('price-requests.edit');
+Route::put('/price-requests/{priceRequest}', [PriceRequestController::class, 'update'])->name('price-requests.update');
+Route::delete('/price-requests/{priceRequest}', [PriceRequestController::class, 'destroy'])->name('price-requests.delete');
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -23,13 +23,13 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item active" aria-current="page">View</li>
-                  <li class="breadcrumb-item"><a href="{{ route('order.create') }}">Create</a></li>
-                  <li class="breadcrumb-item"><a href="{{ route('orders.export')}}">Export</a></li>
+                  <li class="breadcrumb-item"><a href="{{ route('price-requests.create')}}">Create</a></li>
+                  <li class="breadcrumb-item"><a href="#">Export</a></li>
 
                 </ol>
               </nav>
             <div class="card">
-                <div class="card-header">{{ __('Orders') }}</div>
+                <div class="card-header">{{ __('Price Quotes Request') }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -46,23 +46,25 @@
                             <th scope="col">Descriptions</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Units</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Cost</th>
                             <th width="280px">Action</th>
                           </tr>
                         </thead>
                         <tbody>
-                            @foreach ($orders as $order)
+                            @foreach ($priceRequests as $request)
                             <tr>
-                                <th scope="row">{{ $order->id }}</th>
-                                <td>{{ $order->items }}</td>
-                                <td>{{ $order->descriptions }}</td>
-                                <td>{{ $order->quantity }}</td>
-                                <td>{{ $order->units }}tonnes</td>
+                                <th scope="row">{{ $request->id }}</th>
+                                <td>{{ $request->items }}</td>
+                                <td  style="width: 20%;">{{ $request->descriptions }}</td>
+                                <td>{{ $request->quantity }}</td>
+                                <td>{{ $request->units }}tonnes</td>
+                                <td style="width: 15%;">{{ number_format($request->price, 0, ".", ",") }} TZS</td>
+                                <td style="width: 15%;">{{ number_format($request->cost, 0, ".", ",") }} TZS</td>
                                 <td>
-                                    <form action="{{ route('orders.delete',$order->id) }}" method="POST">
+                                    <form action="{{ route('price-requests.delete', $request->id) }}" method="POST">
 
-                                        {{-- <a class="btn btn-info btn-sm" href="{{ route('order.show', $order->id) }}">Show</a> --}}
-
-                                        <a class="btn btn-primary btn-sm" href="{{ route('orders.edit',$order->id) }}">Edit</a>
+                                        <a class="btn btn-primary btn-sm" href="{{ route('price-requests.edit', $request->id) }}">Edit</a>
 
                                         @csrf
                                         @method('DELETE')
@@ -74,7 +76,7 @@
                             @endforeach
                         </tbody>
                       </table>
-                      {!! $orders->links() !!}
+                      {!! $priceRequests->links() !!}
                 </div>
             </div>
         </div>
