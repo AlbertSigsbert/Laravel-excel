@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\OrdersExport;
-use App\Order;
+use App\PriceRequest;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
-class OrderController extends Controller
+class PriceRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->paginate(5);
-       return view('orders.order')->with('orders', $orders);
+      $priceRequests = PriceRequest::latest()->paginate(5);
+       return view('pricerequests.index')->with('priceRequests', $priceRequests );
     }
 
     /**
@@ -27,7 +25,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        return view('pricerequests.create');
     }
 
     /**
@@ -43,46 +41,48 @@ class OrderController extends Controller
             'descriptions' => 'required',
             'descriptions' => 'required',
             'quantity'=> 'required|integer|gt:0',
-            'units'=> 'required|integer|gt:0'
+            'units'=> 'required|integer|gt:0',
+            'price' => 'required|integer|gt:0',
+            'cost' => 'required|integer|gt:0'
         ]);
 
-        Order::create($request->all());
+        PriceRequest::create($request->all());
 
-        return redirect()->route('orders')
-                        ->with('success','Order created successfully.');
+        return redirect()->route('price-requests.index')
+                        ->with('success','Price Request made successfully.');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\PriceRequest  $priceRequest
      * @return \Illuminate\Http\Response
      */
-    // public function show(Order $order)
-    // {
-    //     return view('orders.show')->with('order', $order);
-
-    // }
+    public function show(PriceRequest $priceRequest)
+    {
+        //
+    }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Order  $order
+     * @param  \App\PriceRequest  $priceRequest
      * @return \Illuminate\Http\Response
      */
-    public function edit(Order $order)
+    public function edit(PriceRequest $priceRequest)
     {
-        return view('orders.edit',compact('order'));
+        return view('pricerequests.edit')->with('request', $priceRequest);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Order  $order
+     * @param  \App\PriceRequest  $priceRequest
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, PriceRequest $priceRequest)
     {
         $request->validate([
             'items' => 'required',
@@ -92,28 +92,23 @@ class OrderController extends Controller
             'units'=> 'required|integer|gt:0'
         ]);
 
-        $order->update($request->all());
+        $priceRequest->update($request->all());
 
-        return redirect()->route('orders')
-                        ->with('success','Order updated successfully.');
+        return redirect()->route('price-requests.index')
+                        ->with('success','Price request updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Order  $order
+     * @param  \App\PriceRequest  $priceRequest
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Order $order)
+    public function destroy(PriceRequest $priceRequest)
     {
-        $order->delete();
+        $priceRequest->delete();
 
-        return redirect()->route('orders')
-        ->with('success','Order deleted successfully.');
-    }
-
-    public function export()
-    {
-        return Excel::download(new OrdersExport, 'orders.xlsx');
+        return redirect()->route('price-requests.index')
+        ->with('success','Price Request deleted successfully.');
     }
 }
