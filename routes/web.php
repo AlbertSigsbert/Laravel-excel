@@ -38,11 +38,10 @@ Route::post('/price-requests', [PriceRequestController::class, 'store'])->name('
 Route::get('/price-requests/{priceRequest}', [PriceRequestController::class, 'edit'])->name('price-requests.edit');
 Route::put('/price-requests/{priceRequest}', [PriceRequestController::class, 'update'])->name('price-requests.update');
 Route::delete('/price-requests/{priceRequest}', [PriceRequestController::class, 'destroy'])->name('price-requests.delete');
+Route::get('/export', [PriceRequestController::class, 'export'])->name('price-requests.export');
 
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
