@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Events\AfterSheet;
 
+
 class OrdersExport implements FromQuery, WithMapping, WithHeadings, WithColumnFormatting, WithEvents
 {
     use Exportable;
