@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PriceRequestExport;
 use App\PriceRequest;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PriceRequestController extends Controller
 {
@@ -110,5 +112,10 @@ class PriceRequestController extends Controller
 
         return redirect()->route('price-requests.index')
         ->with('success','Price Request deleted successfully.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new PriceRequestExport,'price-requests.xlsx');
     }
 }
