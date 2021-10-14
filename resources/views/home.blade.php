@@ -7,7 +7,7 @@
         <div class="col-md-4">
             <ul class="list-group">
                  <a href="{{ route('orders') }}" class="list-group-item">Orders</a>
-                 <a href="#" class="list-group-item">Items</a>
+                 <a href="{{ route('price-requests.index') }}" class="list-group-item">Price Requests</a>
                  <a href="#" class="list-group-item">Items</a>
                  <a href="#" class="list-group-item">Items</a>
                  <a href="#" class="list-group-item">Items</a>
