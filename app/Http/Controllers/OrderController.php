@@ -41,12 +41,23 @@ class OrderController extends Controller
         $request->validate([
             'items' => 'required',
             'descriptions' => 'required',
-            'descriptions' => 'required',
             'quantity'=> 'required|integer|gt:0',
-            'units'=> 'required|integer|gt:0'
+            'units'=> 'nullable|integer|gt:0'
+
         ]);
 
-        Order::create($request->all());
+        $data = $request->all();
+
+        $order = new Order;
+
+        $order->items = $data['items'];
+        $order->descriptions = $data['descriptions'];
+        $order->quantity = $data['quantity'];
+        $order->units = $data['units'];
+        $order->done = false;
+
+        $order->save();
+
 
         return redirect()->route('orders')
                         ->with('success','Order created successfully.');
@@ -89,7 +100,7 @@ class OrderController extends Controller
             'descriptions' => 'required',
             'descriptions' => 'required',
             'quantity'=> 'required|integer|gt:0',
-            'units'=> 'required|integer|gt:0'
+            'units'=> 'nullable|integer|gt:0'
         ]);
 
         $order->update($request->all());
@@ -115,5 +126,14 @@ class OrderController extends Controller
     public function export()
     {
         return Excel::download(new OrdersExport, 'orders.xlsx');
+    }
+
+    public function done(Order $order)
+    {
+       $order->done = true;
+       $order->save();
+       return redirect()->route('orders')
+       ->with('success','Order marked done successfully.');
+
     }
 }

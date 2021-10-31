@@ -28,7 +28,8 @@ Route::get('/orders/{order}', [OrderController::class, 'edit'])->name('orders.ed
 Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
 Route::put('orders/{order}', [OrderController::class, 'update'])->name('orders.update');
 Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.delete');
-Route::get('users/export/', 'OrderController@export')->name('orders.export');
+Route::get('orders/export/', 'OrderController@export')->name('orders.export');
+Route::get('orders/{order}/done/', 'OrderController@done')->name('orders.done');
 
 
 /* price Requests routes */

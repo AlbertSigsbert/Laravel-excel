@@ -43,9 +43,9 @@ class PriceRequestController extends Controller
             'descriptions' => 'required',
             'descriptions' => 'required',
             'quantity'=> 'required|integer|gt:0',
-            'units'=> 'required|integer|gt:0',
+            'units'=> 'nullable|integer|gt:0',
             'price' => 'required|integer|gt:0',
-            'cost' => 'required|integer|gt:0'
+            'cost' => 'integer|gt:0'
         ]);
 
         PriceRequest::create($request->all());
@@ -91,7 +91,7 @@ class PriceRequestController extends Controller
             'descriptions' => 'required',
             'descriptions' => 'required',
             'quantity'=> 'required|integer|gt:0',
-            'units'=> 'required|integer|gt:0'
+            'units'=> 'nullable|integer|gt:0'
         ]);
 
         $priceRequest->update($request->all());
