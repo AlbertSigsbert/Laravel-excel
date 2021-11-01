@@ -61,7 +61,10 @@
                                     <form action="{{ route('orders.delete',$order->id) }}" method="POST">
 
                                         {{-- <a class="btn btn-info btn-sm" href="{{ route('order.show', $order->id) }}">Show</a> --}}
+                                         @if (!$order->done)
+                                            <a class="btn btn-success btn-sm" href="{{ route('orders.done',$order->id) }}">Done</a>
 
+                                         @endif
                                         <a class="btn btn-primary btn-sm" href="{{ route('orders.edit',$order->id) }}">Edit</a>
 
                                         @csrf

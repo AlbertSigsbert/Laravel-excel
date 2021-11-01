@@ -18,7 +18,7 @@ class CreatePriceRequestsTable extends Migration
             $table->string('items');
             $table->text('descriptions')->nullable();
             $table->unsignedInteger('quantity');
-            $table->unsignedInteger('units');
+            $table->unsignedInteger('units')->nullable();
             $table->bigInteger('price');
             $table->bigInteger('cost');
             $table->timestamps();
