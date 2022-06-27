@@ -12,3 +12,6 @@ This is a project prototype for a client made using Laravel.
 - Laravel v7
 - Laravel Excel
 - MySQL
+
+### Links
+[Project Demo Link](http://xyz-stores.herokuapp.com/)
